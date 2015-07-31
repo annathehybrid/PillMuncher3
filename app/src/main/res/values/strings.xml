@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Pillaroo</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="pill_1">Press to get Humira</string>
+    <string name="pill_2">Press to get Ibuprofen</string>
+    <string name="search">Search for Humira</string>
+    <string name="action_refresh">Search for Crestor</string>
+    <string name="action_another">Search for Cres</string>
+    <string name="directions_1">Click on the snowman to get Humira suggestions</string>
+    <string name="directions_2">Click on the sun to get Crestor suggestions</string>
+    <string name="directions_3">Click on the raincloud to get Crest suggestions</string>
+
+
+</resources>

@@ -12,8 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -97,6 +99,22 @@ public class MainActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
 
+
+
+        ImageButton imgButton = (ImageButton) view.findViewById(R.id.imageButton);
+
+
+        imgButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "You Clicked the button!", Toast.LENGTH_LONG).show();
+                new MyDownloadTask().execute("texas", "houston", "wheee", "crest");
+            }
+        });
+
+
+
         //new MyDownloadTask().execute("input_here");
        //MyDownloadTask downloadTask = new MyDownloadTask();
         //downloadTask.execute("input_here");
@@ -108,7 +126,7 @@ public class MainActivityFragment extends Fragment {
                 "Yellow Pill"
         };
 
-        List<String> weekPills = new ArrayList<String>(Arrays.asList(pill_data));
+        final List<String> weekPills = new ArrayList<String>(Arrays.asList(pill_data));
 
 
         PillAdapter = new ArrayAdapter<String>(
@@ -122,6 +140,41 @@ public class MainActivityFragment extends Fragment {
 
         PillAdapter.add("hi hi");
         listView.setAdapter(PillAdapter);
+
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //String forecast = mForecastAdapter.getItem(position);
+                //Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
+
+
+                //Intent intent = new Intent(getActivity(), DetailActivity.class)
+                //        .putExtra(Intent.EXTRA_TEXT, forecast);
+
+                String message = "http://rxnav.nlm.nih.gov/REST/rxcui.json?idtype=NDC&id=11523-7020-1";
+                Toast.makeText(getActivity(), "You clicked the list!", Toast.LENGTH_LONG).show();
+
+
+                //Log.e("logging the adapter", PillAdapter.toString());
+
+
+                //for(int x = 1; x < 6; x = x+1) {
+                for (String value : weekPills) {
+
+                    Log.e("logging the adapter", value);
+                }
+
+
+                //Intent intent = new Intent(getActivity(), DetailActivity.class)
+                //        .putExtra(Intent.EXTRA_TEXT, message);
+                //startActivity(intent);
+            }
+        });
+
+
 
 
         return view;
@@ -239,14 +292,6 @@ public class MainActivityFragment extends Fragment {
 
             if (result != null) {
                 Log.e("this is the result", send_to_the_adapter);
-
-
-
-
-
-
-
-
 
                 PillAdapter.add(send_to_the_adapter);
             }

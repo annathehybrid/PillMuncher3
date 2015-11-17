@@ -14,10 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,22 +33,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class MainActivityFragment extends Fragment {
 
     public ArrayAdapter<String> PillAdapter;
 
     public MainActivityFragment() {
-
-
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
     }
 
@@ -56,9 +53,6 @@ public class MainActivityFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         if (id == R.id.action_refresh) {
@@ -84,11 +78,8 @@ public class MainActivityFragment extends Fragment {
             return true;
         }
 
-
-
         return super.onOptionsItemSelected(item);
     }
-
 
 
 
@@ -97,8 +88,6 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-
-
 
 
         ImageButton imgButton = (ImageButton) view.findViewById(R.id.imageButton);
@@ -115,10 +104,6 @@ public class MainActivityFragment extends Fragment {
 
 
 
-        //new MyDownloadTask().execute("input_here");
-       //MyDownloadTask downloadTask = new MyDownloadTask();
-        //downloadTask.execute("input_here");
-
         // Create some dummy data for the ListView.  Here's a sample pillbox
         String[] pill_data = new String[]{
                 "Red Pill",
@@ -127,7 +112,6 @@ public class MainActivityFragment extends Fragment {
         };
 
         final List<String> weekPills = new ArrayList<String>(Arrays.asList(pill_data));
-
 
         PillAdapter = new ArrayAdapter<String>(
                 getActivity(), //global information about the app enviroment, resources
@@ -147,43 +131,48 @@ public class MainActivityFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                //String forecast = mForecastAdapter.getItem(position);
-                //Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
-
-
-                //Intent intent = new Intent(getActivity(), DetailActivity.class)
-                //        .putExtra(Intent.EXTRA_TEXT, forecast);
 
                 String message = "http://rxnav.nlm.nih.gov/REST/rxcui.json?idtype=NDC&id=11523-7020-1";
-                Toast.makeText(getActivity(), "You clicked the list!", Toast.LENGTH_LONG).show();
 
-
-                //Log.e("logging the adapter", PillAdapter.toString());
-
+                Log.e("logging the adapter", PillAdapter.toString());
 
                 //for(int x = 1; x < 6; x = x+1) {
+                //PillAdapter.clear();
+
                 for (String value : weekPills) {
 
-                    Log.e("logging the adapter", value);
+                    // These are the names of the JSON objects that need to be extracted.
+                    final String typed_input;
+                    final String suggestion_list;
+
+                    Log.e("array", value);
+
+                    JSONObject obj = new JSONObject();
+
+                    JSONObject.put("name", getPillDataFromJson.getName("pill")); // Set the first name/pair
+
                 }
-
-
-                //Intent intent = new Intent(getActivity(), DetailActivity.class)
-                //        .putExtra(Intent.EXTRA_TEXT, message);
-                //startActivity(intent);
             }
+
+
         });
 
-
-
-
         return view;
-        //return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
+    public class getPillDataFromJson {
 
+        // These are the names of the JSON objects that need to be extracted.
+        private String tylonel;
 
+        public void setName (String s) {
+            tylonel = "tylonel";
+        }
 
+        public static void getName(String value) {
+            return String tylonel;
+        }
+    }
 
 
     public class MyDownloadTask extends AsyncTask<String, Void, String> {
@@ -200,8 +189,8 @@ public class MainActivityFragment extends Fragment {
         @Override
         public String doInBackground(String... args) {
 
-            //URL url;
-            //see_if_this_works = "hello I'm in the Async task";
+            String see_if_this_works = "hello I'm in the Async task";
+            Log.e("async task", see_if_this_works);
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
             String forecastJsonStr = null;
@@ -296,16 +285,8 @@ public class MainActivityFragment extends Fragment {
                 PillAdapter.add(send_to_the_adapter);
             }
 
-            //send_to_the_adapter = result;
-
-            //Log.e("from post execute", send_to_the_adapter);
-
         }
-
-
-
     }
-
 
 
 }
